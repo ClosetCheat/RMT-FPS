@@ -10,6 +10,7 @@ using System.Linq;
 public class Launcher : MonoBehaviourPunCallbacks
 {
 
+    public int initial = 0;
     public static Launcher Instance;
 
     [SerializeField] TMP_InputField roomNameInputField;
@@ -43,9 +44,13 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinedLobby(){
-        MenuManager.Instance.OpenMenu("title");
+        if(initial == 0){
+            MenuManager.Instance.OpenMenu("First");
+            initial++;
+        }else{
+            MenuManager.Instance.OpenMenu("title");
+        }
         Debug.Log("Joined Lobby");
-
     } 
 
     public void CreateRoom(){
