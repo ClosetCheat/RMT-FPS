@@ -1,2 +1,2 @@
 # RMT-FPS
-A multiplayer FPS game I made with some friends as a uni project
+A multiplayer FPS game my friends made as a uni project
