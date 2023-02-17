@@ -88,6 +88,8 @@ namespace PlayFab.PfEditor
                 downloadHandler = new DownloadHandlerBuffer(),
                 method = "POST"
             };
+            www.disposeUploadHandlerOnDispose = true;
+            www.disposeDownloadHandlerOnDispose = true;
 
             foreach (var header in headers)
             {
@@ -188,6 +190,7 @@ namespace PlayFab.PfEditor
                     errorCallback(www.error);
                 else
                     callBack(www.downloadHandler.text);
+                www.Dispose();
             }
             else
             {

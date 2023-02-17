@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Realtime;
 using Photon.Pun;
+using TMPro;
+using Photon.Realtime;
+using System.Linq;
 
 public class Scoreboard : MonoBehaviourPunCallbacks
 {
@@ -53,6 +55,9 @@ public class Scoreboard : MonoBehaviourPunCallbacks
         {
             canvasGroup.alpha = 0;
 
+        }else if(Input.GetKeyUp(KeyCode.Escape)){
+            Application.Quit();
+            Debug.Log("Quit");
         }
     }
 
