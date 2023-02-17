@@ -12,6 +12,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public int initial = 0;
     public static Launcher Instance;
+    public GameObject HUD;
 
     [SerializeField] TMP_InputField roomNameInputField;
     [SerializeField] TMP_Text errorText;
@@ -31,6 +32,12 @@ public class Launcher : MonoBehaviourPunCallbacks
     void Start()
     {
         Debug.Log("Connecting to master");
+        MenuManager.Instance.OpenMenu("startPanel");
+        
+    }
+
+    public void startIntro(){
+        HUD.SetActive(false);
         PhotonNetwork.ConnectUsingSettings();
     }
 
