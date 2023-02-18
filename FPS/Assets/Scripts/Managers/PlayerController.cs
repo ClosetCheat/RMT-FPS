@@ -25,11 +25,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     float currentHealth = maxHealth;
     PlayerManager playerManager;
 
+    private float lasttime = -50.0f;
+
     void Awake()
     {
+        
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
-
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
 
@@ -37,7 +39,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if(PV.IsMine){
             EquipItem(0);
-           
         }else{
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
@@ -78,8 +79,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 EquipItem(itemIndex-1);
             }
        }
-       if(Input.GetMouseButtonDown(0)){
+       if(Input.GetMouseButtonDown(0) && (Time.time - lasttime > 1.0f)){
             items[itemIndex].Use();
+            lasttime = Time.time;
         }
         if(transform.position.y < -10f){
             Die();
@@ -88,8 +90,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     void Move(){
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical")).normalized;
-       moveAmount = Vector3.SmoothDamp(moveAmount, moveDir*(Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
-
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir*(Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
     }
 
     void Look(){
@@ -161,7 +162,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
     void Die(){
-        
         playerManager.Die();
     }
 }
