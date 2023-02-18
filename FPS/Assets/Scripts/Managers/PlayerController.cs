@@ -50,9 +50,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if(!PV.IsMine){
             return;
         }
-       Look();
-       Move();
-       Jump();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Look();
+        Move();
+        Jump();
 
        for (int i = 0; i < items.Length; i++)
        {
