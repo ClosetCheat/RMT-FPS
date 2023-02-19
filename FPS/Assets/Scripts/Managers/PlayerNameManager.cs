@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class PlayerNameManager : MonoBehaviour
 {
@@ -26,5 +28,18 @@ public class PlayerNameManager : MonoBehaviour
     {
         PhotonNetwork.NickName = usernameInput.text;
         PlayerPrefs.SetString("username", usernameInput.text);
+        var request = new UpdateUserTitleDisplayNameRequest{
+            DisplayName = usernameInput.text,
+        };
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, onDisplayNameUpdate, onError);
+    }
+
+    void onDisplayNameUpdate(UpdateUserTitleDisplayNameResult result){
+        Debug.Log("Dispaly name updated");
+    }
+
+    void onError(PlayFabError error){
+        Debug.Log(error.GenerateErrorReport());
+
     }
 }
