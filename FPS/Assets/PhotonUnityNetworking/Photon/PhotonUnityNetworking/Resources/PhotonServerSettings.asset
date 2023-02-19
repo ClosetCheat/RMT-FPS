@@ -45,6 +45,12 @@ MonoBehaviour:
   - RPC_GetKill
   - RPC_Shoot
   - RPC_TakeDamage
+  - Update
+  - PlayAudio
+  - StopAudio
+  - GunShot
+  - Footsteps
+  - Gunshot
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
