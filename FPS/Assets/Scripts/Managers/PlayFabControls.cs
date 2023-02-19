@@ -36,6 +36,17 @@ public class PlayFabControls : MonoBehaviour
 
     public void RegisterSuccess(RegisterPlayFabUserResult result){
         ErrorSignUp.text = "";
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest() {
+        Data = new Dictionary<string, string>() {
+            {"Kills", "0"},
+            {"Deaths", "0"}
+        }
+        },
+        result => Debug.Log("Successfully updated user data"),
+        error => {
+            Debug.Log("Got error setting user data");
+            Debug.Log(error.GenerateErrorReport());
+        });
         StartGame();
     }
 
