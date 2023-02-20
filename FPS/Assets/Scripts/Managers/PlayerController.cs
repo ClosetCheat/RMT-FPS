@@ -79,7 +79,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
        }
        if(Input.GetMouseButtonDown(0)){
+        Animator someWeapon;
+        someWeapon = items[itemIndex].itemGameObject.GetComponent<Animator>();
             items[itemIndex].Use();
+            someWeapon.SetTrigger("Shoot");
         }
         if(transform.position.y < -10f){
             Die();
