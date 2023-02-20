@@ -15,6 +15,8 @@ public class PlayerManager : MonoBehaviour
 
     GameObject controller;
 
+    public PlayFabControls controls;
+
     public int kills;
     public int deaths;
 
@@ -90,6 +92,22 @@ public class PlayerManager : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 
+    public void SendLeaderboard(int score){
+        var request = new UpdatePlayerStatisticsRequest{
+            Statistics = new List<StatisticUpdate>{
+                new StatisticUpdate{
+                    StatisticName = "Kills",
+                    Value = score
+                }
+            }
+        };
+        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, onError);
+    }
+
+    void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result){
+        Debug.Log("Successful leaderboard update");
+    }
+
     void onSuccessKill(GetUserDataResult result){
         if(result.Data != null && result.Data.ContainsKey("Kills") && result.Data.ContainsKey("Deaths")){
             string Kills = result.Data["Kills"].Value;
@@ -102,16 +120,22 @@ public class PlayerManager : MonoBehaviour
                 {"Kills", Kills},
                 {"Deaths", Deaths}
             }},
-            result => Debug.Log("Successfully updated user data"),
+            result =>{Debug.Log("Successfully updated user data");
+                        SendLeaderboard(int.Parse(Kills));
+                        Debug.Log("Successfully updated user data");}, 
             error => {
                 Debug.Log("Got error setting user data Ancestor to Arthur");
                 Debug.Log(error.GenerateErrorReport());
             });
+            
             Debug.Log("Success");
         } else {
             Debug.Log("Error");
         }
     }
+
+    
+
 
 
     public static PlayerManager Find(Player player)
