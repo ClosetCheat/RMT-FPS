@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private float lasttime = -50.0f;
 
+    private Animator pistol;
+    private Animator rifle;
+    int triggerHash = Animator.StringToHash("Shoot");
+
     void Awake()
     {
         
@@ -39,6 +43,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if(PV.IsMine){
             EquipItem(0);
+            rifle = items[0].itemGameObject.GetComponent<Animator>();
+            pistol = items[1].itemGameObject.GetComponent<Animator>();
         }else{
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
@@ -80,21 +86,49 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
        }
        if(Input.GetMouseButtonDown(0) &&(itemIndex==0) && (Time.time - lasttime > 1.5f)){
-            Animator someWeapon;
-            someWeapon = items[itemIndex].itemGameObject.GetComponent<Animator>();
-            items[itemIndex].Use();
-            someWeapon.SetTrigger("Shoot");
-            lasttime = Time.time;
+            // Animator someWeapon;
+            // someWeapon = items[itemIndex].itemGameObject.GetComponent<Animator>();
+            // items[itemIndex].Use();
+            // rifle.SetTrigger(triggerHash);
+            // lasttime = Time.time;
+            ShootRifleAnimation(triggerHash);
         }
         else if(Input.GetMouseButtonDown(0) &&(itemIndex==1) && (Time.time - lasttime > 0.4f)){
-            Animator someWeapon;
-            someWeapon = items[itemIndex].itemGameObject.GetComponent<Animator>();
-            items[itemIndex].Use();
-            someWeapon.SetTrigger("Shoot");
-            lasttime = Time.time;
+            // Animator someWeapon;
+            // someWeapon = items[itemIndex].itemGameObject.GetComponent<Animator>();
+            // items[itemIndex].Use();
+            // pistol.SetTrigger(triggerHash);
+            // lasttime = Time.time;
+
+            // Hashtable props = new Hashtable();
+            // props["Trigger"] = triggerHash;
+            // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            ShootPistolAnimation(triggerHash);
         }
         if(transform.position.y < -10f){
             Die();
+        }
+    }
+
+    void ShootPistolAnimation(int _triggerHash){
+        items[itemIndex].Use();
+        pistol.SetTrigger(_triggerHash);
+        lasttime = Time.time;
+        if(PV.IsMine){
+            Hashtable props = new Hashtable();
+            props["Trigger"] = _triggerHash;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+    }
+
+        void ShootRifleAnimation(int _triggerHash){
+        items[itemIndex].Use();
+        rifle.SetTrigger(_triggerHash);
+        lasttime = Time.time;
+        if(PV.IsMine){
+            Hashtable props = new Hashtable();
+            props["Trigger"] = _triggerHash;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
     }
 
@@ -152,6 +186,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if(changedProps.ContainsKey("itemIndex") && !PV.IsMine && targetPlayer == PV.Owner){
             EquipItem((int)changedProps["itemIndex"]);
+        }
+        if (changedProps.ContainsKey("Trigger") && !PV.IsMine && targetPlayer == PV.Owner)
+        {
+            ShootPistolAnimation((int)changedProps["Trigger"]);
         }
     }
 
