@@ -9,7 +9,7 @@ public class GunShot :  MonoBehaviourPunCallbacks
     private float lasttime = -50.0f;
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && (Time.time - lasttime > 1.0f)){
+        if(Input.GetMouseButtonDown(0) && (Time.time - lasttime > 1.5f)){
             photonView.RPC("Gunshot", RpcTarget.All);
             lasttime = Time.time;
         }
