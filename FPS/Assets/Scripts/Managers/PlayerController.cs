@@ -79,7 +79,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 EquipItem(itemIndex-1);
             }
        }
-       if(Input.GetMouseButtonDown(0) && (Time.time - lasttime > 1.0f)){
+       if(Input.GetMouseButtonDown(0) &&(itemIndex==0) && (Time.time - lasttime > 1.5f)){
+            Animator someWeapon;
+            someWeapon = items[itemIndex].itemGameObject.GetComponent<Animator>();
+            items[itemIndex].Use();
+            someWeapon.SetTrigger("Shoot");
+            lasttime = Time.time;
+        }
+        else if(Input.GetMouseButtonDown(0) &&(itemIndex==1) && (Time.time - lasttime > 0.4f)){
             Animator someWeapon;
             someWeapon = items[itemIndex].itemGameObject.GetComponent<Animator>();
             items[itemIndex].Use();
