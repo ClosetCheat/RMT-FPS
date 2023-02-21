@@ -1,4 +1,4 @@
-![sugoma logo](https://1000logos.net/wp-content/uploads/2021/09/Among-Us-Logo.png 'sugoma')  
+<img src="https://1000logos.net/wp-content/uploads/2021/09/Among-Us-Logo.png" width="400" height="200"> 
 
 Sugoma is a multiplayer first person shooter game made in Unity with [Photon engine](https://www.photonengine.com) as a networking tool and [PlayFab](https://playfab.com) as data management system.  
 ---  
