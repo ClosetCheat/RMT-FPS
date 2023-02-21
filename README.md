@@ -26,7 +26,10 @@ Sugoma is a multiplayer first person shooter game made in Unity with [Photon eng
 # **Project tree**
 
  * [.vscode](/FPS/.vscode/)
- * [Assets](/FPS/Assets/)      
+ * [Assets](/FPS/Assets/)
+   * [Animations](/FPS/Assets/Animatons/)
+     * [Pistol](/FPS/Assets/Animations/Rifle)
+     * [Rifle](/FPS/Assets/Animations/Rifle)
    * [Items](/FPS/Assets/Items/) 
    * [Materials](/FPS/Assets/Materials)
    * [Music](/FPS/Assets/Music)
@@ -49,7 +52,8 @@ Sugoma is a multiplayer first person shooter game made in Unity with [Photon eng
  * [UserSettings](/FPS/UserSettings/)
 
 *Assets folder structure breakdown*
-> Items hold assets that define two types of guns: Pistol and Rifle.  
+> Animations contain animation files for pistol and rifle objects as well as animation controllers for those animations.  
+ Items hold assets that define two types of guns: Pistol and Rifle.  
  Materials define all materials used for any objects used inside game scene (player, guns, map...).  
  Music contains all audio files used for effects or menu.  
  PostProcessing defines all profiles used to improve the game appearance.  
